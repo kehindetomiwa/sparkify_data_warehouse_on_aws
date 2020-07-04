@@ -1,8 +1,8 @@
 # sparkify_data_warehouse_on_aws
-#Project: Data Warehouse
+# Project: Data Warehouse
 
 
-##Introduction
+## Introduction
 
 
 A music streaming startup, Sparkify, 
@@ -25,7 +25,7 @@ database and ETL pipeline by running queries
 given to you by the analytics team from Sparkify 
 and compare your results with their expected results.
 
-##Project Description
+## Project Description
 
 
 In this project, you'll apply what 
