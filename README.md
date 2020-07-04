@@ -37,3 +37,11 @@ you will need to load data from S3
 to staging tables on Redshift and 
 execute SQL statements that create the 
 analytics tables from these staging tables.
+
+
+
+## data stagging design 
+![Tux, the Linux mascot](img/stage.png)
+
+## schema design 
+![Tux, the Linux mascot](img/schema_design.png)
