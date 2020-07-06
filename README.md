@@ -40,7 +40,7 @@ analytics tables from these staging tables.
 
 
 
-## data stagging design 
+## data stagging schema
 ![Tux, the Linux mascot](img/stage.png)
 
 ## schema design 
