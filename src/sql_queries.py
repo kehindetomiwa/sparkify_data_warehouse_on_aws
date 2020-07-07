@@ -1,9 +1,4 @@
-import configparser
-
-
-# CONFIG
-config = configparser.ConfigParser()
-config.read('dwh.cfg')
+from config import config
 
 # DROP TABLES
 
@@ -113,26 +108,102 @@ CREATE TABLE IF NOT EXISTS time (
 # STAGING TABLES
 
 staging_events_copy = ("""
-""").format()
+COPY event_stage
+FROM {}
+CREDENTIALS 'aws_iam_role={}'
+REGION 'us-west-2'
+FORMAT AS JSON '{}';
+""").format(config['S3']['LOG_DATA'],
+            config["IAM_ROLE"]["ARN"],
+            config["S3"]["LOG_JSONPATH"])
 
 staging_songs_copy = ("""
-""").format()
+COPY song_stage
+FROM {}
+CREDENTIALS 'aws_iam_role{}'
+REGION 'us-west-2'
+JSON 'auto'
+""").format(config['S3']['LOG_DATA'],
+            config["IAM_ROLE"]["ARN"])
 
 # FINAL TABLES
 
 songplay_table_insert = ("""
+insert into songplays(
+    start_time,
+    user_id,
+    level,
+    song_id,
+    artist_id,
+    session_id,
+    location,
+    user_agent    
+)
+select timestamp 'epoch' + ts * interval '0.001 seconds' as start_time,
+    user_id,
+    level,
+    song.song_id as song_id,
+    sessionId as session_id,
+    staging_events.location as location,
+    userAgent as user_agent
+from event_stage
+inner join artists on artist.name = event_stage.artist
+inner join songs on songs.title = event_stage.song
+where page = 'NextSong'
 """)
 
 user_table_insert = ("""
+INSERT INTO users(
+    user_id,
+    first_name,
+    last_name,
+    gender,
+    level
+)
+SELECT DISTINCT user_id, firstName, lastName, gender, level
+FROM event_stage
 """)
 
 song_table_insert = ("""
+INSERT INTO songs(
+    song_id,
+    title,
+    artist_id,
+    year,
+    duration
+)
+SELECTION DISTINCT song_id, title, artist_id, year, duration
+FROM event_stage
 """)
 
 artist_table_insert = ("""
+INSERT INTO artists (
+    artist_id, 
+    name, 
+    location, 
+    latitude, 
+    longitude
+)
+SELECT DISTINCT artist_id, artist_name, artist_location, artist_latitude, artist_longitude
+FROM event_stage
 """)
 
 time_table_insert = ("""
+insert into time (
+    start_time,
+    hour,
+    day,
+    week,
+    year,
+    weekday
+)
+SELECT DISTINCT start_time,
+                extract(hour from timestamp 'epoch' + start_time * interval '0.001 seconds') as hour,
+                extract(day from timestamp 'epoch' + start_time * interval '0.001 seconds') as day,
+                extract(week from timestamp 'epoch' + start_time * interval '0.001 seconds') as week,
+                extract(year from timestamp 'epoch' + start_time * interval '0.001 seconds') as year,
+                extract(weekday from timestamp 'epoch' + start_time * interval '0.001 seconds') as weekday
+from songplays 
 """)
 
 # QUERY LISTS
