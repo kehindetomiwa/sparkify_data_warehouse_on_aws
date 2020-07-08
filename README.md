@@ -48,14 +48,27 @@ analytics tables from these staging tables.
 
 
 ## project requirements and flow
-1.  dwg.cfg (AWS access keys in corresponsing section)
-2. pip install -r requirement.txt
-3. spin up redshift cluster with:
+*   dwg.cfg (AWS access keys in corresponsing section)
+*  pip install -r requirement.txt
+* spin up redshift cluster with:
    
+    
     python start_redshift.py
 
-4. etl pipeline: (a). load data into staging tables on redshift from s3 
-(b). populate analytics with table in redshift 
+* etl pipeline: 
+
+-- create table 
+
+    python create_table.py
+
+-- load data into staging tables on redshift from s3 
+
+-- populate analytics with table in redshift 
 
     python etl.py
+    
+ * stop cluster 
+ 
+    
+    python clean_up.py
 
