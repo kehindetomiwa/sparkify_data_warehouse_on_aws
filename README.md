@@ -53,11 +53,13 @@ analytics tables from these staging tables.
 * spin up redshift cluster with:
    
     
+    
     python start_redshift.py
 
 * etl pipeline: 
 
 -- create table 
+
 
     python create_table.py
 
