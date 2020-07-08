@@ -49,7 +49,11 @@ analytics tables from these staging tables.
 
 ## project requirements and flow
 *   dwg.cfg (AWS access keys in corresponsing section)
-*  pip install -r requirement.txt
+
+
+    pip install -r requirement.txt
+
+
 * spin up redshift cluster with:
    
     
