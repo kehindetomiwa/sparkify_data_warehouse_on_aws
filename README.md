@@ -45,3 +45,17 @@ analytics tables from these staging tables.
 
 ## schema design 
 ![Tux, the Linux mascot](img/schema_design.png)
+
+
+## project requirements and flow
+1.  dwg.cfg (AWS access keys in corresponsing section)
+2. pip install -r requirement.txt
+3. spin up redshift cluster with:
+   
+    python start_redshift.py
+
+4. etl pipeline: (a). load data into staging tables on redshift from s3 
+(b). populate analytics with table in redshift 
+
+    python etl.py
+

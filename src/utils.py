@@ -27,4 +27,19 @@ def connect_to_database():
     print('connected to Redshift')
     return conn
 
+def redshift_status(config, redshift):
+    '''
+    check cluster status
+    :param config:
+    :param redshift:
+    :return: status
+    '''
+    try:
+        cluster_status = redshift.describe_clusters(
+            ClusterIdentifier=config['CLUSTER']['CLUSTER_IDENTIFIER']
+        )
+    except Exception as e:
+        print('exception: ', e)
+        return None
+    return cluster_status['Clusters'][0]
 
