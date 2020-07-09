@@ -51,14 +51,22 @@ analytics tables from these staging tables.
 *   dwg.cfg (AWS access keys in corresponding section)
 
 
+   
     pip install -r requirement.txt
+
+
 
 
 * spin up redshift cluster with:
    
     
     
+    
+ 
     python start_redshift.py
+    
+    
+    
 
 * etl pipeline: 
 
