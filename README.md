@@ -48,7 +48,7 @@ analytics tables from these staging tables.
 
 
 ## project requirements and flow
-*   dwg.cfg (AWS access keys in corresponsing section)
+*   dwg.cfg (AWS access keys in corresponding section)
 
 
     pip install -r requirement.txt
